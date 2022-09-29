@@ -6,7 +6,7 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:09:01 by ayassin           #+#    #+#             */
-/*   Updated: 2022/09/27 16:37:16 by ayassin          ###   ########.fr       */
+/*   Updated: 2022/09/29 08:17:21 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Fixed{
 		int	getRawBits( void ) const;
 		void setRawBits( int const raw );
 		private:
-			int int_value;
+			int num;
 			static const int frac = 8;
 };
 #endif 

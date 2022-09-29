@@ -6,31 +6,47 @@
 /*   By: ayassin <ayassin@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:08:53 by ayassin           #+#    #+#             */
-/*   Updated: 2022/09/27 17:29:25 by ayassin          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:29:49 by ayassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-Fixed::Fixed(void):int_value(0)
+Fixed::Fixed(void):num(0)
 {
 	std::cout << "Default constructor called\n";
 }
 
-Fixed::Fixed(const int x):int_value(x)
+Fixed::Fixed(const int x)
 {
+	int temp = x, sign, exp = 0;
+	int i = 0;
+	
+	sign = x >> 31;
+		
+	temp = temp & 0x7fff;
+	while (temp > 0 && temp >> i != 1)
+		++i;
+	exp = 127 + i;
+	
+	temp = temp ^ (1 << i);
+	if (i >= 23)
+		temp = temp >> (i - 23);
+	else
+    	temp =  temp << (23 - i);
+	num = sign << 31 | exp << 23 | temp;
 	std::cout << "Int constructor called\n";
 }
 
-Fixed::Fixed(const float x):int_value(static_cast<int>(x))
+Fixed::Fixed(const float x):num(*((int *)(&x)))
 {
 	std::cout << "Float constructor called\n";
 }
 
-Fixed::Fixed(Fixed &src)
+Fixed::Fixed(Fixed const &src)
 {
-	*this = src;
 	std::cout << "Copy constructor called\n";
+	*this = src;
 }
 
 Fixed::~Fixed(void)
@@ -41,18 +57,34 @@ Fixed::~Fixed(void)
 Fixed &Fixed::operator=(Fixed const &cpy)
 {
 	std::cout << "Copy assignment operator called\n";
-	this->int_value = cpy.int_value;
+	this->num = cpy.num;
 	return (*this);
 }
 
 int	Fixed::getRawBits(void) const
 {
 	std::cout<< "getRawBits member function called\n";
-	return(int_value);
+	return(num);
 }
 
 void Fixed::setRawBits(int const raw)
 {
 	std::cout<< "setRawBits member function called\n";
-	int_value = raw;
+	num = raw;
+}
+
+float Fixed::toFloat(void) const
+{
+	return(*(float *)(&num));
+}
+
+int Fixed::toInt(void) const
+{
+	return(roundf(*((float *)(&num))));
+}
+
+std::ostream& operator<<(std::ostream &os, Fixed const &n)
+{
+	os << n.toFloat();
+	return (os);
 }
