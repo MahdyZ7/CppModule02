@@ -1,6 +1,6 @@
 NAME = main
 
-SRC = Fixed.cpp main.cpp
+SRC = Fixed.cpp Fixed1.cpp Fixed2.cpp main.cpp
 
 CC = c++
 
