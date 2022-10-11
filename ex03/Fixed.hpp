@@ -25,10 +25,10 @@ class Fixed{
 		~Fixed(void);
 
 		Fixed &operator=(Fixed const &cpy);
-		Fixed operator+(Fixed const &alu);
-		Fixed operator-(Fixed const &alu);
-		Fixed operator*(Fixed const &alu);
-		Fixed operator/(Fixed const &alu);
+		Fixed operator+(Fixed const &alu) const;
+		Fixed operator-(Fixed const &alu) const;
+		Fixed operator*(Fixed const &alu) const;
+		Fixed operator/(Fixed const &alu) const;
 
 		Fixed &operator++(); //prefix
 		Fixed operator++(int); //postfix

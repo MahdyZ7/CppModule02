@@ -41,7 +41,7 @@ Fixed::Fixed(const int x)
 Fixed::Fixed(const float x)
 {
 	num = 0;
-	num = num | ((int)(x * (1 << frac)));
+	num = num | ((int) roundf(x * (1 << frac)));
 	std::cout << "Float constructor called\n";
 }
 
